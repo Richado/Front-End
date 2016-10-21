@@ -1,0 +1,122 @@
+<!-- // 作业 17
+/*
+实现一个登录页, 有 2 个标签分别是用户名输入框和登录按钮
+给登录按钮绑定一个 click 事件
+检查用户名是否符合如下规则
+1，第一位是字母
+2，只能包含字母、数字、下划线
+3，只能字母或数字结尾
+4，最小长度2
+5，最大长度10
+
+如果符合规则, log '检查合格'
+如果不符合, 在登录按钮后插入一个红色 h1 标签
+内容是 '用户名错误'
+
+需要补全的代码自行解决
+*/ -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>作业17-登录页</title>
+        <style media="screen">
+            .red {
+                color: red;
+                display: inline;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="id-div-container">
+            <input id='id-input' type="text">
+            <button id='id-button' type="button">登录</button>
+        </div>
+        <script type="text/javascript">
+            var log = function() {
+                console.log.apply(console, arguments)
+            }
+
+            var isLetter = function(s) {
+                var lower = 'abcdefghijklmnopqrstuvwxyz'
+                var upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+                for (var i = 0; i < lower.length; i++) {
+                    if (lower[i] === s) {
+                        return true
+                    }
+                }
+                for (var i = 0; i < upper.length; i++) {
+                    if (upper[i] === s) {
+                        return true
+                    }
+                }
+                return false
+            }
+            var isDigit = function(s) {
+                var num = '0123456789'
+                for (var i = 0; i < num.length; i++) {
+                    if (num[i] === s) {
+                        return true
+                    }
+                }
+                return false
+            }
+            var isEquals = function(s) {
+                if (s === '_') {
+                    return true
+                } else {
+                    return false
+                }
+            }
+            var one = function(s) {
+                return isLetter(s[0])
+            }
+            var two = function(s) {
+                for (var i = 0; i < s.length; i++) {
+                    if (!( isLetter(s[i]) || isDigit(s[i])  || isEquals(s[i]) )) {
+                        return false
+                    }
+                }
+                return true
+            }
+            var three = function(s) {
+                var t = s[s.length-1]
+                if (!( isLetter(t) || isDigit(t) )) {
+                    return false
+                }
+                return true
+            }
+            var four = function(s) {
+                if (s.length >= 2 && s.length <= 10 ) {
+                    return true
+                } else {
+                    return false
+                }
+            }
+
+            var template = function(s) {
+                var t = `<h1 class="red">${s}</h1>`
+                return t
+            }
+            var insert = function(s) {
+                var parent = document.querySelector('.id-div-container')
+                var t = template(s)
+                parent.insertAdjacentHTML('beforeend', t)
+            }
+
+            var addInput = document.querySelector('#id-input')
+            var addButton = document.querySelector('#id-button')
+            addButton.addEventListener('click', function() {
+                var inValue = addInput.value
+                //  log(inValue)
+                if (one(inValue) && two(inValue) && three(inValue) && four(inValue) ) {
+                    //inValue符合我们设定的规则
+                    log('检查合格')
+                } else {
+                    insert('用户名错误')
+                }
+            })
+        </script>
+    </body>
+</html>

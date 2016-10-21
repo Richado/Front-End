@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>ceshi</title>
+        <style media="screen">
+            .red {
+                color: red;
+            }
+            .div2-container {
+                margin-top: 30px;
+            }
+            .div3-container {
+                margin-top: 30px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="div1">
+            <input type="text" name="name" value="作业9-7测试，请输入appendHtml('.div1', t)">
+            <button class='addButton9-8' type="button" name="button">作业9-8测试</button>
+            <button class='addButton9-9' type="button" name="button">作业9-9测试</button>
+        </div>
+
+        <div class="div2-container">
+            <div class="div2">
+                测试9-10-1 后面会插入一段html
+            </div>
+            <div class="div2">
+                测试9-10-2    后面会插入一段html
+            </div>
+            <div class="div2">
+                测试9-10-3    后面会插入一段html
+            </div>
+        </div>
+
+        <div class="div3-container">
+            <div class="div3">
+                测试9-11
+                <button class='addButton9-11' type="button" name="button">属于responseClass</button>
+                <button  type="button" name="button">不属于responseClass</button>
+            </div>
+            <div class="div3">
+                <button class='addButton9-11' type="button" name="button">属于responseClass</button>
+                <button  type="button" name="button">不属于responseClass</button>
+            </div>
+            <div class="div3">
+                <button class='addButton9-11' type="button" name="button">属于responseClass</button>
+                <button  type="button" name="button">不属于responseClass</button>
+            </div>
+        </div>
+
+        <script src="myFEWork9.js" charset="utf-8"></script>
+        <script type="text/javascript">
+            var log = function() {
+                console.log.apply(console, arguments)
+            }
+
+            var equal = function(condition, message) {
+                if (!condition) {
+                    log(`*** 测试失败, ${message}`)
+                } else {
+                    log(`*** 测试成功, ${message}`)
+                }
+            }
+
+            var ensureEqual = function(array1, array2, message) {
+                if (JSON.stringify(array1) !== JSON.stringify(array2)) {
+                    log(`*** 测试失败, ${array1} 不等于 ${array2}, ${message}`)
+                } else {
+                    log(`*** 测试成功, ${array1} 等于 ${array2}, ${message}`)
+                }
+            }
+
+            var test_1 = function() {
+                ensureEqual(unique([1, 2, 3, 1, 3, 5]), [1, 2, 3, 5], 'test 1-1')
+                ensureEqual(unique([1, 1, 3, 3, 1, 3]), [1, 3], 'test 1-2')
+            }
+            // test_1()
+
+            var test_2 = function() {
+                ensureEqual(intersection([1, 2, 3, 4, 5, 1], [2, 3, 4, 1]), [1, 2, 3, 4], 'test2-1')
+            }
+            // test_2()
+
+            var test_3 = function() {
+                ensureEqual(union([1, 2, 3, 4, 5, 1], [2, 3, 4, 1]), [1, 2, 3, 4, 5], 'tets3-1')
+            }
+            // test_3()
+
+            var test_4 = function() {
+                ensureEqual(difference([1, 2, 3, 4, 5, 1, 5], [2, 3, 4, 1]), [5], 'test4-1')
+            }
+            // test_4()
+
+            var test_5 = function() {
+                ensureEqual(differenceAll([1, 2, 3, 4, 5, 1, 5], [2, 3, 4, 6, 1, 6, 7]), [5, 6, 7], 'test5-1')
+            }
+            // test_5()
+
+            var test_6 =function() {
+                equal(isSubset([2, 3, 4, 1], [1, 2, 3, 4, 5, 1, 5]), 'test6-1')
+            }
+            // test_6()
+
+            var test_7 = function() {
+                var html = `<h3 class='red'>这是一个单个元素插入测试 test7-1</h3>`
+                var element = '.div1'
+                appendHtml('.div1', html)
+            }
+
+            var test_8 = function() {
+                var element = '.addButton9-8'
+                var eventName = 'click'
+                var callback = function() {
+                    log('*** 测试成功 test8-1')
+                }
+                bindEvent(element, eventName, callback)
+            }
+
+            var test_9 = function() {
+                var element = '.div1'
+                var eventName = 'click'
+                var callback = function() {
+                    log('*** 测试成功 test9-1 只有按钮2才会log')
+                }
+                var responseClass = 'addButton9-9'
+                bindEventDelegate(element, eventName, callback, responseClass)
+            }
+
+            var test_10 = function() {
+                var selector = '.div2'
+                var html = `<h2 class='red'>这是多个元素插入测试 test10-1</h2>`
+                append(selector, html)
+            }
+
+            var test_11 = function() {
+                var selector = '.div3'
+                var eventName = 'click'
+                var callback = function() {
+                    log('*** 测试成功 test11-1 ')
+                    log('只有属于responseClass的元素才会调用log')
+                }
+                var responseClass = 'addButton9-11'
+                // bindAll(selector, eventName, callback)
+                bindAll(selector, eventName, callback, responseClass)
+            }
+
+            var _main = function() {
+                test_1()
+                test_2()
+                test_3()
+                test_4()
+                test_5()
+                test_6()
+                test_7()
+                test_8()
+                test_9()
+                test_10()
+                test_11()
+            }
+
+            // _main()
+        </script>
+    </body>
+</html>
